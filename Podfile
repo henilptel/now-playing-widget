@@ -6,10 +6,9 @@ target 'NowPlaying' do
   use_frameworks!
 
   # Pods for NowPlaying
-  # Pinned — this widget's source (last updated June 2021) predates API
-  # changes in newer PockKit releases (e.g. NSButton/NSStackView layout
-  # convenience extensions were removed). Unpinned resolves to latest and
-  # fails to compile.
-  pod 'PockKit', '0.1.3'
+  # PockKit's CocoaPods trunk releases stop at 0.3.1 (Oct 2021) — later
+  # API additions this source needs (e.g. PKWidgetPreference) only ever
+  # landed on the git repo's main branch, never a numbered release.
+  pod 'PockKit', :git => 'https://github.com/pock/pockkit.git'
 
 end

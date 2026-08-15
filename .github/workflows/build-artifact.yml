@@ -1,0 +1,24 @@
+name: Build artifact
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - "NowPlaying/**"
+      - "NowPlaying.xcodeproj/**"
+      - "Podfile"
+      - ".github/workflows/build-artifact.yml"
+  workflow_dispatch:
+
+jobs:
+  build:
+    uses: henilptel/xcode-ci/.github/workflows/build.yml@main
+    with:
+      mode: build
+      use-cocoapods: true
+      workspace: NowPlaying.xcworkspace
+      scheme: NowPlaying
+      product-path: NowPlaying.pock
+      artifact-name: NowPlaying-widget
+      artifact-path: Release/NowPlaying.pock

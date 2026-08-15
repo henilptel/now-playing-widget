@@ -107,9 +107,25 @@ class NowPlayingHelper {
 			guard let self = self else {
 				return
 			}
-			self.currentNowPlayingItem?.title  = info?[kMRMediaRemoteNowPlayingInfoTitle]  as? String
-			self.currentNowPlayingItem?.album  = info?[kMRMediaRemoteNowPlayingInfoAlbum]  as? String
-			self.currentNowPlayingItem?.artist = info?[kMRMediaRemoteNowPlayingInfoArtist] as? String
+			var title  = info?[kMRMediaRemoteNowPlayingInfoTitle]  as? String
+			let album  = info?[kMRMediaRemoteNowPlayingInfoAlbum]  as? String
+			var artist = info?[kMRMediaRemoteNowPlayingInfoArtist] as? String
+
+			// Spotify's MediaRemote publishing sometimes bundles "Track • Artist"
+			// into the title field alone and leaves artist empty, instead of
+			// populating both fields separately like other apps do. Recover the
+			// artist from the title in that case rather than showing a blank.
+			if (artist?.isEmpty ?? true), let rawTitle = title, rawTitle.contains(" • ") {
+				let parts = rawTitle.components(separatedBy: " • ")
+				if parts.count == 2 {
+					title = parts[0]
+					artist = parts[1]
+				}
+			}
+
+			self.currentNowPlayingItem?.title  = title
+			self.currentNowPlayingItem?.album  = album
+			self.currentNowPlayingItem?.artist = artist
 			defer {
 				self.view?.updateContentViews()
 			}

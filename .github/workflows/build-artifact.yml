@@ -22,4 +22,4 @@ jobs:
       product-path: NowPlaying.pock
       artifact-name: NowPlaying-widget
       artifact-path: Release/NowPlaying.pock
-      extra-build-settings: 'MACOSX_DEPLOYMENT_TARGET=10.13'
+      extra-build-settings: 'MACOSX_DEPLOYMENT_TARGET=10.15'
